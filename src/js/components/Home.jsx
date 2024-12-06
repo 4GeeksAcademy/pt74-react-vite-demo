@@ -1,28 +1,27 @@
-import React from "react";
-
 //include images into your bundle
-import rigoImage from "../../img/rigo-baby.jpg";
+import { Container, Row, Col } from "./Layout";
+import zero_thoughts from "../../img/zero_thought.jpg";
 
 //create your first component
 const Home = () => {
-	return (
-		<div className="text-center">
-            
-
-			<h1 className="text-center mt-5">Hello Rigo!</h1>
-			<p>
-				<img src={rigoImage} />
-			</p>
-			<a href="#" className="btn btn-success">
-				If you see this green button... bootstrap is working...
-			</a>
-			<p>
-				Made by{" "}
-				<a href="http://www.4geeksacademy.com">4Geeks Academy</a>, with
-				love!
-			</p>
-		</div>
-	);
+  return (
+    <Container breakpoint="md">
+      <Row gx={0} gy={0}>
+        <Col
+          width={{ col: 3, xs: 12, sm: 6, md: 4 }}
+          offset={{ offset: 1, md: 0 }}
+        >
+          <img style={{ width: "100%", height: "auto" }} src={zero_thoughts} />
+        </Col>
+        <Col>
+          <img style={{ width: "100%", height: "auto" }} src={zero_thoughts} />
+        </Col>
+        <Col>
+          <img style={{ width: "100%", height: "auto" }} src={zero_thoughts} />
+        </Col>
+      </Row>
+    </Container>
+  );
 };
 
 export default Home;
