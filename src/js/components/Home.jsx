@@ -40,6 +40,7 @@ const Home = () => {
           <Timer value={value.toString().padStart(5, "0")} />
         </Col>
       </Row>
+      <div className="mt-2"></div>
       <Row>
         <Col>
           <VolumeSlider />
