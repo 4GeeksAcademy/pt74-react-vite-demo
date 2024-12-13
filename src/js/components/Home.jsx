@@ -3,6 +3,7 @@ import { useState } from "react";
 
 import { Container, Row, Col } from "./Layout";
 import BookCard from "./BookCard";
+import BookForm from "./BookForm";
 
 //create your first component
 const Home = () => {
@@ -63,6 +64,13 @@ const Home = () => {
 
   return (
     <Container breakpoint="md">
+      <Row>
+        <Col>
+          <BookForm onSubmit={(book) => setLibrary([book, ...library])} />
+        </Col>
+      </Row>
+      <hr />
+      <div className="mt-2"></div>
       <Row>
         <Col>
           <div className="d-flex flex-column align-items-center gap-3 mt-2">
