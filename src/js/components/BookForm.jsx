@@ -27,7 +27,7 @@ const BookForm = ({ onSubmit }) => {
         <form
           className="col"
           onSubmit={(ev) => {
-            ev.preventDefault();
+            ev.preventDefault(); // This prevents the page from reloading.
             onSubmit(testBook);
             setTestBook({
               cover: "https://placehold.co/200x300",
