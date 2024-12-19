@@ -1,6 +1,6 @@
 import "./BookCard.css";
 
-const BookCard = ({ book, onToggleRead }) => {
+const BookCard = ({ book, onToggleRead, onDelete }) => {
   return (
     <div className="card mb-3">
       <div className="row g-0">
@@ -35,7 +35,11 @@ const BookCard = ({ book, onToggleRead }) => {
                   I have not read this (yet.) :(
                 </button>
               )}
-              <li className="list-group-item"></li>
+              <li className="list-group-item">
+                <button className="btn btn-danger" onClick={onDelete}>
+                  This book belongs somewhere else?
+                </button>
+              </li>
             </ul>
           </div>
         </div>

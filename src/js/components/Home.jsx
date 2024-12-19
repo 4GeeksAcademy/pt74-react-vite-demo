@@ -20,39 +20,84 @@ const Home = () => {
   };
 
   useEffect(() => {
-    // // Promise chaining.
-    // console.log("This will log first.");
-    // fetch("https://library.dotlag.space/library")
-    //   .then((resp) => resp.json())
-    //   .then((data) => setLibrary(data.books))
-    //   .then(() => console.log("This will happen at the end."));
-    // console.log("This will log second.");
     getData();
   }, []);
 
-  const toggleRead = (idx) => {
-    let oldBook = library[idx];
-    oldBook.have_read = !oldBook.have_read;
-    setLibrary(library.toSpliced(idx, 1, oldBook));
+  const createBook = async (book) => {
+    const resp = await fetch("https://library.dotlag.space/library/add", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(book),
+    });
+    const data = await resp.json();
+    setLibrary([...library, data]);
+  };
+
+  const toggleRead = async (book) => {
+    const resp = await fetch(
+      `https://library.dotlag.space/library/${book.id}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          ...book,
+          have_read: !book.have_read,
+        }),
+      }
+    );
+
+    const data = await resp.json();
+
+    setLibrary(
+      library.toSpliced(
+        library.findIndex((library_book) => library_book.id === book.id),
+        1,
+        data
+      )
+    );
+  };
+
+  const deleteBook = async (book) => {
+    const resp = await fetch(
+      `https://library.dotlag.space/library/${book.id}`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    setLibrary(
+      library.toSpliced(
+        library.findIndex((library_book) => library_book.id === book.id),
+        1
+      )
+    );
   };
 
   return (
     <Container breakpoint="md">
-      {/* <Row>
+      <Row>
         <Col>
-          <BookForm onSubmit={(book) => setLibrary([book, ...library])} />
+          <BookForm onSubmit={(book) => createBook(book)} />
         </Col>
       </Row>
       <hr />
-      <div className="mt-2"></div> */}
+      <div className="mt-2"></div>
       <Row>
         <Col>
           <div className="d-flex flex-column align-items-center gap-3 mt-2">
-            {library.map((book, idx) => (
+            {library.map((book) => (
               <BookCard
                 book={book}
-                key={idx}
-                onToggleRead={() => toggleRead(idx)}
+                key={book.id}
+                onToggleRead={() => toggleRead(book)}
+                onDelete={() => deleteBook(book)}
               />
             ))}
           </div>
